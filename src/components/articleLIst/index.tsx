@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
-import { Button, Divider,List } from 'antd'
+import { List } from 'antd'
+import { AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import Service from '../../service'
+import { Article,Avatar,Author,Category } from './interface'
 export default function ArticleList() {
+
   const [artList,setArtList] = useState([])
 
   const getArticle = ()=>{
@@ -10,7 +13,6 @@ export default function ArticleList() {
       setArtList(res.data.results)
     })
   }
-
   useEffect(()=>{
     getArticle()
   },[])
