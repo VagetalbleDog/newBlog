@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
-import { List, message } from 'antd'
+import { Divider, List, message, Skeleton } from 'antd'
 import { AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import Service from '../../service'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { Article, Avatar, Author, Category } from '../../interface/articleList'
 const ArticleList: React.FC = () => {
   const [artList, setArtList] = useState<Article[]>([])
 
-  //用于滚动加载的防抖
+  // 用于滚动加载的防抖
   const [loading, setLoading] = useState<boolean>(false)
   const [nextPage, setNextPage] = useState<number>(1)
 
@@ -18,13 +19,12 @@ const ArticleList: React.FC = () => {
     if (nextPage === 10086) {
       message.info('已经全部加载完毕啦！您也可以发表文章哦！')
     }
-    message.loading('正在加载中')
     console.log(1)
     setLoading(true)
     Service.get('/api/article/', { page: nextPage })
       .then((res: any) => {
-        console.log(res.data)
         setArtList([...artList, ...res.data.results])
+        message.success('加载成功')
         if (res.data.next === null) {
           setNextPage(10086)
         } else {
@@ -42,6 +42,8 @@ const ArticleList: React.FC = () => {
   }, [])
   return (
     <Container>
+    <div id='container'>
+      <InfiniteScroll scrollableTarget="container" endMessage={<Divider plain>没有更多数据啦!</Divider>} loader={<Skeleton avatar paragraph={{ rows: 2 }} active/>} hasMore={nextPage < 10086} dataLength={artList.length} next={loadMoreArticle}>
       <List
         itemLayout="vertical"
         dataSource={artList}
@@ -68,6 +70,8 @@ const ArticleList: React.FC = () => {
           )
         }}
       ></List>
+      </InfiniteScroll>   
+    </div>
     </Container>
   )
 }
@@ -118,6 +122,12 @@ const Container = styled.div`
   }
   .author {
     font-size: 20px;
+  }
+  #container{
+    height: 700px;
+    overflow: auto;
+    padding: 0 16px;
+    border: 1px solid rgba(140,140,140,0.35);
   }
 `
 export default ArticleList
