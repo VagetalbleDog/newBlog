@@ -1,18 +1,9 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  // 粘贴时格式化代码
+  "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
+  "files.autoSave": "onFocusChange",
+  "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
-  // 保存时格式化代码
   "editor.formatOnSave": true,
+  "editor.fontSize": 14
 }

@@ -42,49 +42,54 @@ const ArticleList: React.FC = () => {
   }, [])
   return (
     <Container>
-    <div id='container'>
-      <InfiniteScroll scrollableTarget="container" endMessage={<Divider plain>没有更多数据啦!</Divider>} loader={<Skeleton avatar paragraph={{ rows: 2 }} active/>} hasMore={nextPage < 10086} dataLength={artList.length} next={loadMoreArticle}>
-      <List
-        itemLayout="vertical"
-        dataSource={artList}
-        size="large"
-        footer={<p>下拉展示更多数据</p>}
-        renderItem={(item: any) => {
-          return (
-            <List.Item className="listItem">
-              <div>
-                <span className="category">{item.category.title}</span>
-                {item.tags.map((tag: string) => {
-                  return <span className="tag">{tag}</span>
-                })}
-              </div>
-              <a className="title" href={item.url}>
-                {item.title}
-              </a>
-              <div className="otherDetail">
-                <span className="created">发布时间：{new Date(item.created).toDateString()}</span>
-                <span className="updated">最后修改于：{new Date(item.updated).toDateString()}</span>
-                <span className="author">Created By：{item.author.username}</span>
-              </div>
-            </List.Item>
-          )
-        }}
-      ></List>
-      </InfiniteScroll>   
-    </div>
+      <InfiniteScroll
+        scrollableTarget="container"
+        endMessage={<Divider plain>没有更多数据啦!</Divider>}
+        loader={<Skeleton avatar paragraph={{ rows: 2 }} active />}
+        hasMore={nextPage < 10086}
+        dataLength={artList.length}
+        next={loadMoreArticle}
+      >
+        <List
+          itemLayout="vertical"
+          dataSource={artList}
+          size="large"
+          renderItem={(item: any) => {
+            return (
+              <List.Item className="listItem">
+                <div>
+                  <span className="category">{item.category.title}</span>
+                  {item.tags.map((tag: string) => {
+                    return <span className="tag">{tag}</span>
+                  })}
+                </div>
+                <a className="title" href={item.url}>
+                  {item.title}
+                </a>
+                <div className="otherDetail">
+                  <span className="created">发布时间：{new Date(item.created).toDateString()}</span>
+                  <span className="updated">
+                    最后修改于：{new Date(item.updated).toDateString()}
+                  </span>
+                  <span className="author">Created By：{item.author.username}</span>
+                </div>
+              </List.Item>
+            )
+          }}
+        ></List>
+      </InfiniteScroll>
     </Container>
   )
 }
-
 const Container = styled.div`
+  width: 60%;
   .listItem {
-    width: auto;
-    height: 200px;
+    width: 80%;
     margin-top: 20px;
     transition: all 0.5s;
   }
   .listItem:hover {
-    transform: scale(1.1);
+    transform: translate(40px);
     box-shadow: rgba(0, 0, 0, 0.2) 10px 10px 10px 10px;
   }
   .title {
@@ -122,12 +127,6 @@ const Container = styled.div`
   }
   .author {
     font-size: 20px;
-  }
-  #container{
-    height: 700px;
-    overflow: auto;
-    padding: 0 16px;
-    border: 1px solid rgba(140,140,140,0.35);
   }
 `
 export default ArticleList
