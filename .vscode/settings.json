@@ -1,9 +1,12 @@
 {
   "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
   "files.autoSave": "onFocusChange",
-  "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
+  "workbench.iconTheme": "Monokai Classic Icons",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "editor.fontSize": 14
+  "editor.fontSize": 14,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

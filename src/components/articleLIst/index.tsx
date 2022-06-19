@@ -1,18 +1,15 @@
 import styled from '@emotion/styled'
 import { Avatar, Button, Divider, List, message, Skeleton, Tag } from 'antd'
 import { ReadOutlined } from '@ant-design/icons'
-import { AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import Service from '../../service'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Article, Author, Category } from '../../interface/articleList'
-import { Map } from 'typescript'
 import { Link } from 'react-router-dom'
 
 const tagColors: string[] = ['cyan', 'gold', 'blue', 'purple']
 
 const descriptions = new Map()
-
 const ArticleList: React.FC = () => {
   const [artList, setArtList] = useState<Article[]>([])
 
@@ -112,7 +109,7 @@ const ArticleList: React.FC = () => {
                           src={
                             item.avatar
                               ? item.avatar.content
-                              : 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
+                              : 'https://ts1.cn.mm.bing.net/th/id/R-C.61f9585ddd422a051f25d2cd63241714?rik=rTqY8OYUxS0VTA&riu=http%3a%2f%2fpic.baike.soso.com%2fp%2f20140317%2f20140317135943-549848529.jpg&ehk=YumnXO%2focBmyX5x1%2bZagEzD5hwbH6WZKRLueHDno0SA%3d&risl=&pid=ImgRaw&r=0'
                           }
                         />
                       }
@@ -143,6 +140,7 @@ const ArticleList: React.FC = () => {
     </Container>
   )
 }
+
 const Container = styled.div`
   width: 60%;
   .skeleton {
