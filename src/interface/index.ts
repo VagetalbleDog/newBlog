@@ -17,6 +17,15 @@ export interface Avatar {
   content: string
 }
 
+export interface Comment {
+  id: number
+  url: string
+  author: Author
+  article: string
+  parent_comments: Comment
+  body: string
+  created: Date | null
+}
 export interface Article {
   url: string
   id: number
@@ -27,4 +36,6 @@ export interface Article {
   title: string
   created: string | Date
   updated: string | Date
+  body: string
+  comments: Comment[]
 }

@@ -4,7 +4,7 @@ import { ReadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import Service from '../../service'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Article, Author, Category } from '../../interface/articleList'
+import { Article } from '../../interface'
 import { Link } from 'react-router-dom'
 
 const tagColors: string[] = ['cyan', 'gold', 'blue', 'purple']
@@ -27,12 +27,12 @@ const ArticleList: React.FC = () => {
     setLoading(true)
     Service.get('/api/article/', { page: nextPage })
       .then((res: any) => {
-        setArtList([...artList, ...res.data.results])
+        setArtList([...artList, ...res.results])
         let requestArr = []
-        for (let item of res.data.results) {
+        for (let item of res.results) {
           requestArr.push(
             Service.get(`/api/article/${item.id}`).then((res: any) => {
-              descriptions.set(item.id, res.data.body.slice(0, 50))
+              descriptions.set(item.id, res.body.slice(0, 50))
             })
           )
         }
@@ -43,7 +43,7 @@ const ArticleList: React.FC = () => {
           .catch((err) => {
             message.error(err)
           })
-        if (res.data.next === null) {
+        if (res.next === null) {
           setNextPage(10086)
         } else {
           setNextPage(nextPage + 1)
@@ -65,8 +65,6 @@ const ArticleList: React.FC = () => {
         endMessage={<Divider plain>没有更多数据啦!</Divider>}
         loader={
           <>
-            <Skeleton className="skeleton" avatar paragraph={{ rows: 2 }} active />
-            <Skeleton className="skeleton" avatar paragraph={{ rows: 2 }} active />
             <Skeleton className="skeleton" avatar paragraph={{ rows: 2 }} active />
             <Skeleton className="skeleton" avatar paragraph={{ rows: 2 }} active />
           </>
@@ -142,7 +140,7 @@ const ArticleList: React.FC = () => {
 }
 
 const Container = styled.div`
-  width: 60%;
+  width: 100%;
   .skeleton {
     margin: 40px 0;
   }

@@ -1,5 +1,5 @@
-import { message } from "antd"
-import axios from "axios"
+import { message } from 'antd'
+
 export default class Service {
   static async get(url: string, query: any = {}) {
     if (query) {
@@ -8,8 +8,12 @@ export default class Service {
         url += `${key}=${query[key]}&`
       }
     }
-    return axios.get(url).catch((error) => {
-      message.warn(error)
-    })
+    return fetch(url)
+      .catch((error) => {
+        message.warn(error)
+      })
+      .then((res: any) => {
+        return res.json()
+      })
   }
 }
