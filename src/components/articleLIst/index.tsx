@@ -9,14 +9,18 @@ import { Link } from 'react-router-dom'
 
 const tagColors: string[] = ['cyan', 'gold', 'blue', 'purple']
 
-const descriptions = new Map()
+interface Description {
+  articleId: number
+  content: string
+}
+
 const ArticleList: React.FC = () => {
   const [artList, setArtList] = useState<Article[]>([])
 
   // 用于滚动加载的防抖
   const [loading, setLoading] = useState<boolean>(false)
   const [nextPage, setNextPage] = useState<number>(1)
-
+  const [descritons, SetDescriptions] = useState<Description[]>([])
   const loadMoreArticle = (): void => {
     if (loading) {
       return
@@ -30,14 +34,14 @@ const ArticleList: React.FC = () => {
         setArtList([...artList, ...res.results])
         let requestArr = []
         for (let item of res.results) {
-          requestArr.push(
-            Service.get(`/api/article/${item.id}`).then((res: any) => {
-              descriptions.set(item.id, res.body.slice(0, 50))
-            })
-          )
+          requestArr.push(Service.get(`/api/article/${item.id}`))
         }
         Promise.all(requestArr)
-          .then(() => {
+          .then((res) => {
+            let nowFour: Description[] = []
+            for (let item of res) {
+              nowFour.push({ articleId: item.id, content: item })
+            }
             console.log('加载成功')
           })
           .catch((err) => {
@@ -112,9 +116,10 @@ const ArticleList: React.FC = () => {
                         />
                       }
                       description={
-                        descriptions.get(item.id)
-                          ? descriptions.get(item.id) + '......'
-                          : '相关内容正在加载中......'
+                        // descriptions.get(item.id)
+                        //   ? descriptions.get(item.id) + '......'
+                        // :
+                        '相关内容正在加载中......'
                       }
                     />
                   </div>
