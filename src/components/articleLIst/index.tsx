@@ -13,14 +13,35 @@ interface Description {
   articleId: number
   content: string
 }
-
+//返回描述
+const findDescription = (descArr: Description[], nowId: number): string => {
+  let idx = descArr.findIndex((item) => {
+    return item.articleId === nowId
+  })
+  if (idx === -1) {
+    return '相关内容正在加载中....'
+  } else {
+    return descArr[idx].content
+  }
+}
+const transformDesc = (description: string): string => {
+  let res = ''
+  for (let char of description) {
+    if (char === '#' || char === '*') {
+      continue
+    } else {
+      res += char
+    }
+  }
+  return res
+}
 const ArticleList: React.FC = () => {
   const [artList, setArtList] = useState<Article[]>([])
 
   // 用于滚动加载的防抖
   const [loading, setLoading] = useState<boolean>(false)
   const [nextPage, setNextPage] = useState<number>(1)
-  const [descritons, SetDescriptions] = useState<Description[]>([])
+  const [descriptions, setDescriptions] = useState<Description[]>([])
   const loadMoreArticle = (): void => {
     if (loading) {
       return
@@ -40,8 +61,12 @@ const ArticleList: React.FC = () => {
           .then((res) => {
             let nowFour: Description[] = []
             for (let item of res) {
-              nowFour.push({ articleId: item.id, content: item })
+              nowFour.push({
+                articleId: item.id,
+                content: transformDesc(item.body.slice(0, 100)) + '........'
+              })
             }
+            setDescriptions([...descriptions, ...nowFour])
             console.log('加载成功')
           })
           .catch((err) => {
@@ -61,6 +86,7 @@ const ArticleList: React.FC = () => {
   }
   useEffect(() => {
     loadMoreArticle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <Container>
@@ -115,12 +141,7 @@ const ArticleList: React.FC = () => {
                           }
                         />
                       }
-                      description={
-                        // descriptions.get(item.id)
-                        //   ? descriptions.get(item.id) + '......'
-                        // :
-                        '相关内容正在加载中......'
-                      }
+                      description={findDescription(descriptions, item.id)}
                     />
                   </div>
                 </Link>
@@ -145,19 +166,19 @@ const ArticleList: React.FC = () => {
 }
 
 const Container = styled.div`
+  margin-left: 20px;
   width: 100%;
   .skeleton {
     margin: 40px 0;
   }
   .listItem {
-    transform: translate(10%);
-    width: 80%;
+    width: 90%;
     margin-top: 20px;
     transition: all 0.5s;
   }
   .listItem:hover {
-    transform: translate(10%, -20px);
-    box-shadow: rgba(0, 0, 0, 0.2) 10px 10px 10px 10px;
+    transform: translate(10px, -20px);
+    box-shadow: rgba(0, 0, 0, 0.2) 5px 5px 5px 5px;
   }
   .title {
     margin-top: 20px;
