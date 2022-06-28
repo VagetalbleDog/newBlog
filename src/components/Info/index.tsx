@@ -26,7 +26,7 @@ const EChartOption = {
       name: '代码统计',
       type: 'pie',
       center: ['50%', '60%'],
-      radius: ['40%', '70%'],
+      radius: ['45%', '70%'],
       avoidLabelOverlap: false,
       itemStyle: {
         borderRadius: 10,
@@ -89,6 +89,7 @@ const Info: React.FC = () => {
         </div>
 
         <div className="codeSummary">
+          <div className="desc">本项目代码统计</div>
           <ReactECharts option={EChartOption} />
         </div>
       </div>
@@ -133,11 +134,11 @@ const Container = styled.div`
       .location {
         margin: 5px 0;
         font-size: 12px;
-        color: #08979c;
+        color: rgba(24, 144, 255, 0.8);
       }
       .major {
         margin: 5px 0;
-        color: #08979c;
+        color: rgba(24, 144, 255, 0.8);
       }
       .work {
         margin: 5px 0;
@@ -146,7 +147,7 @@ const Container = styled.div`
       }
       .mail {
         margin: 5px 0;
-        color: #08979c;
+        color: #531dab;
       }
       .sign {
         font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
@@ -157,6 +158,11 @@ const Container = styled.div`
     }
     .codeSummary {
       margin-top: 10px;
+      .desc {
+        font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+        font-size: 14px;
+        margin-top: 20px;
+      }
     }
   }
 `

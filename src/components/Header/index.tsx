@@ -8,7 +8,7 @@ import {
   UserOutlined,
   CheckCircleOutlined
 } from '@ant-design/icons'
-import { Affix, Button, MenuProps, Space } from 'antd'
+import { Affix, MenuProps } from 'antd'
 import React, { useState } from 'react'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
@@ -91,12 +91,14 @@ export default function HeaderNav() {
   }
 
   return (
-    <Menu
-      theme="light"
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={items}
-    />
+    <Affix>
+      <Menu
+        theme="light"
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={items}
+      />
+    </Affix>
   )
 }

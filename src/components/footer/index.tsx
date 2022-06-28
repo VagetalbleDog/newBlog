@@ -6,14 +6,7 @@ const FooterTip: React.FC = () => {
   return (
     <>
       <br />
-      <Affix offsetBottom={bottom}>
-        <Button type="primary">Affix bottom</Button>
-        <Button type="primary">Affix bottom</Button>
-        <Button type="primary">Affix bottom</Button>
-        <Button type="primary">Affix bottom</Button>
-        <Button type="primary">Affix bottom</Button>
-        <Button type="primary">Affix bottom</Button>
-      </Affix>
+      {/* <Affix offsetBottom={bottom}>1</Affix> */}
     </>
   )
 }
