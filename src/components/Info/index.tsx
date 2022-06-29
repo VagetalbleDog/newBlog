@@ -101,7 +101,7 @@ const Info: React.FC = () => {
         </div>
 
         <div className="codeSummary">
-          <div className="desc">本项目代码统计</div>
+          <div className="desc">Languages</div>
           <ReactECharts option={EChartOption} />
         </div>
       </div>

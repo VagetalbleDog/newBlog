@@ -7,8 +7,7 @@ import { Button, PageHeader, Tabs, Anchor } from 'antd'
 import { Article } from '../../interface'
 import 'github-markdown-css'
 const Header = (props: any) => {
-  const { title, subtitle } = props
-  const { TabPane } = Tabs
+  const { title, subtitle, footer } = props
   return (
     <PageHeader
       className="site-page-header-responsive"
@@ -21,12 +20,7 @@ const Header = (props: any) => {
           删除文章
         </Button>
       ]}
-      footer={
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="文章详情" key="1" />
-          <TabPane tab="评论" key="2" />
-        </Tabs>
-      }
+      footer={footer}
     ></PageHeader>
   )
 }
@@ -123,41 +117,52 @@ const ArticleDetail: React.FC = () => {
   const preventHistory = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
   }
-  return (
-    <>
-      <Header
-        title={article.title ? article.title : '加载中'}
-        subtitle={
-          article.title
-            ? `由 ${article.author.username} 创作于${article.created.toLocaleString()}`
-            : '加载中'
-        }
-      />
-      <Container>
-        <div className="leftSide" />
-        {article.body === '' ? (
-          <div className="markdown-body">
-            <Skeleton className="skeleton" avatar paragraph={{ rows: 8 }} active />
-          </div>
-        ) : (
-          <div
-            className="markdown-body"
-            dangerouslySetInnerHTML={{ __html: article.body_html }}
-          ></div>
-        )}
-        <div className="rightSide">
+  const { TabPane } = Tabs
+  const footer: JSX.Element = (
+    <Tabs defaultActiveKey="1">
+      <TabPane tab="文章详情" key="1">
+        <Container>
+          <div className="leftSide" />
           {article.body === '' ? (
-            <></>
+            <div className="markdown-body">
+              <Skeleton className="skeleton" avatar paragraph={{ rows: 8 }} active />
+            </div>
           ) : (
-            <Anchor onClick={preventHistory}>
-              {AnchorLinkArr.map((link) => {
-                return link
-              })}
-            </Anchor>
+            <div
+              className="markdown-body"
+              dangerouslySetInnerHTML={{ __html: article.body_html }}
+            ></div>
           )}
-        </div>
-      </Container>
-    </>
+          <div className="rightSide">
+            {article.body === '' ? (
+              <></>
+            ) : (
+              <Anchor onClick={preventHistory}>
+                {AnchorLinkArr.map((link) => {
+                  return link
+                })}
+              </Anchor>
+            )}
+          </div>
+        </Container>
+      </TabPane>
+      <TabPane tab="评论" key="2">
+        评论
+      </TabPane>
+    </Tabs>
+  )
+  return (
+    <Header
+      title={article.title ? article.title : '加载中'}
+      subtitle={
+        article.title
+          ? `由 ${article.author.username} 创作于 ${article.created
+              .toLocaleString()
+              .slice(0, 10)} | 最后一次更新于 ${article.updated.toLocaleString().slice(0, 10)}`
+          : '加载中'
+      }
+      footer={footer}
+    />
   )
 }
 
