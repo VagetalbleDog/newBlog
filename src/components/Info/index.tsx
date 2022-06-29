@@ -8,11 +8,11 @@ import {
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 const codeSummaryData = [
-  { name: 'JSON', value: '25' },
-  { name: 'HTML', value: '20' },
-  { name: 'TypeScript', value: '512' },
-  { name: 'CSS', value: '224' },
-  { name: 'JavaScript', value: '13' }
+  { value: 25, rate: '2.7%', name: 'JSON' },
+  { value: 20, rate: '2.1%', name: 'HTML' },
+  { value: 13, rate: '1.4%', name: 'JavaScript' },
+  { value: 244, rate: '26.1%', name: 'CSS' },
+  { value: 631, rate: '67.6%', name: 'TypeScript' }
 ]
 const EChartOption = {
   tooltip: {
@@ -33,6 +33,24 @@ const EChartOption = {
         borderColor: '#fff',
         borderWidth: 2
       },
+      tooltip: {
+        formatter: function (params: any) {
+          let html = `
+            <div style="height:auto;">
+              <div style="font-size:14px;font-weight:bold;color:#333;margin-bottom:16px;display:flex;align-items:center;line-height:1;">
+                <span style="display:inline-block;margin-right:8px;border-radius:6px;width:6px;height:6px;background-color:${params.color};"></span>
+                ${params.data.name}
+              </div>
+              <div style="font-size:12px;color:#808080;margin-bottom:8px;display:flex;align-items:center;line-height:1;">
+                <span style="flex:1;text-align:right;">总计 ${params.data.value} 行</span>
+              </div>
+              <div style="font-size:12px;color:#808080;margin-bottom:8px;display:flex;align-items:center;line-height:1;">
+                <span style="flex:1;text-align:right;">占比 ${params.data.rate}</span>
+              </div>
+            </div>`
+          return html
+        }
+      },
       label: {
         show: false,
         position: 'center'
@@ -40,12 +58,9 @@ const EChartOption = {
       emphasis: {
         label: {
           show: true,
-          fontSize: '40',
+          fontSize: '20',
           fontWeight: 'bold'
         }
-      },
-      labelLine: {
-        show: false
       },
       data: codeSummaryData
     }
@@ -82,10 +97,7 @@ const Info: React.FC = () => {
             <MailOutlined />
             2583243657@qq.com
           </div>
-          <div className="sign">
-            <CheckCircleOutlined />
-            &nbsp; 一只正在努力的程序猿
-          </div>
+          <div className="sign">🎉 一只正在努力的程序猿</div>
         </div>
 
         <div className="codeSummary">

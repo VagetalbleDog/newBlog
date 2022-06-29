@@ -14,7 +14,7 @@ const doSummary = () => {
       let tempArr = regExp.exec(item)
       result.push({
         name: tempArr[1],
-        value: tempArr[9]
+        value: parseInt(tempArr[9])
       })
     }
     return Promise.resolve(true)
@@ -27,7 +27,7 @@ const doSummary = () => {
       let tempArr = regExp.exec(item)
       result.push({
         name: tempArr[1],
-        value: tempArr[9]
+        value: parseInt(tempArr[9])
       })
     }
     return Promise.resolve(true)
@@ -37,5 +37,19 @@ const doSummary = () => {
 }
 
 doSummary().then(() => {
-  console.log(result)
+  let output = []
+  let sum = 0
+  for (let item of result) {
+    sum += item.value
+  }
+  console.log(sum)
+  for (let item of result) {
+    let temp = {
+      value: item.value,
+      rate: ((item.value / sum) * 100).toFixed(1) + '%',
+      name: item.name
+    }
+    output.push(temp)
+  }
+  console.log(output)
 })

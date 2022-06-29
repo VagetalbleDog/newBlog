@@ -1,14 +1,11 @@
 import { message, Skeleton } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { Children, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Service from '../../service'
-import ReactMarkdown from 'react-markdown'
-import MarkNav from 'markdown-navbar'
-import 'github-markdown-css'
-import { Button, PageHeader, Tabs } from 'antd'
+import { Button, PageHeader, Tabs, Anchor } from 'antd'
 import { Article } from '../../interface'
-
+import 'github-markdown-css'
 const Header = (props: any) => {
   const { title, subtitle } = props
   const { TabPane } = Tabs
@@ -33,7 +30,6 @@ const Header = (props: any) => {
     ></PageHeader>
   )
 }
-
 const ArticleDetail: React.FC = () => {
   const param = useParams<any>()
   const [article, setArticle] = useState<Article>({
@@ -60,7 +56,9 @@ const ArticleDetail: React.FC = () => {
     title: '',
     created: '',
     body: '',
-    updated: ''
+    updated: '',
+    toc_html: '',
+    body_html: ''
   })
   const getArticleDetail = () => {
     Service.get(`/api/article/${param.ArticleId}`)
@@ -78,7 +76,9 @@ const ArticleDetail: React.FC = () => {
             title,
             created,
             updated,
-            body
+            body,
+            toc_html,
+            body_html
           } = res
           message.success('加载成功')
           setArticle({
@@ -92,7 +92,9 @@ const ArticleDetail: React.FC = () => {
             title,
             created,
             body,
-            updated
+            updated,
+            toc_html,
+            body_html
           })
         }
       })
@@ -100,9 +102,27 @@ const ArticleDetail: React.FC = () => {
         message.error(err)
       })
   }
+  const AnchorLinkArr = []
+  const { Link } = Anchor
+  let toc: string = article.toc_html.slice(23, article.toc_html.length - 14)
+  let tocArr: string[] = toc.split('</a>')
+  for (let href of tocArr) {
+    let afterIndex = href.indexOf('">')
+    let preIndex = href.indexOf('href="')
+    console.log(href.slice(afterIndex + 2))
+    if (preIndex !== -1 && afterIndex !== -1) {
+      AnchorLinkArr.push(
+        <Link href={href.slice(preIndex + 6, afterIndex)} title={href.slice(afterIndex + 2)} />
+      )
+    }
+  }
   useEffect(() => {
     getArticleDetail()
   }, [])
+  //防止锚点留下历史记录
+  const preventHistory = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+  }
   return (
     <>
       <Header
@@ -120,13 +140,20 @@ const ArticleDetail: React.FC = () => {
             <Skeleton className="skeleton" avatar paragraph={{ rows: 8 }} active />
           </div>
         ) : (
-          <ReactMarkdown className="markdown-body">{article.body}</ReactMarkdown>
+          <div
+            className="markdown-body"
+            dangerouslySetInnerHTML={{ __html: article.body_html }}
+          ></div>
         )}
         <div className="rightSide">
           {article.body === '' ? (
             <></>
           ) : (
-            <MarkNav ordered={false} source={article.body} className="markdown-toc" />
+            <Anchor onClick={preventHistory}>
+              {AnchorLinkArr.map((link) => {
+                return link
+              })}
+            </Anchor>
           )}
         </div>
       </Container>
@@ -152,8 +179,6 @@ const Container = styled.div`
   .rightSide {
     width: 300px;
     .markdown-toc {
-      position: sticky;
-      top: 20px;
       margin-top: 100px;
       margin-left: 40px;
     }

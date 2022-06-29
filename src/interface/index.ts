@@ -38,4 +38,6 @@ export interface Article {
   updated: string | Date
   body: string
   comments: Comment[]
+  toc_html: string
+  body_html: string
 }
