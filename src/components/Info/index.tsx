@@ -73,7 +73,7 @@ const Info: React.FC = () => {
         <div className="avatarBorder">
           <img
             className="avatar"
-            src="https://avatars.githubusercontent.com/u/95014669?v=4"
+            src="https://i-s2.328888.xyz/2022/06/30/62bdbe3b3e520.png"
             alt=""
           />
         </div>

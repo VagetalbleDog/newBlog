@@ -1,4 +1,4 @@
-import { message, Skeleton } from 'antd'
+import { message, Skeleton, Space } from 'antd'
 import React, { Children, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
@@ -6,6 +6,30 @@ import Service from '../../service'
 import { Button, PageHeader, Tabs, Anchor } from 'antd'
 import { Article } from '../../interface'
 import 'github-markdown-css'
+
+const findTitleLevel = (titleStr: string, articleBody: string): [number, number] => {
+  const index = articleBody.indexOf(titleStr)
+  let macTitle
+  if (index < 7) {
+    macTitle = articleBody.slice(0, index + titleStr.length)
+  } else {
+    macTitle = articleBody.slice(index - 7, index + titleStr.length)
+  }
+  let titleLevel = 0
+  for (const char of macTitle) {
+    char === '#' && titleLevel++
+  }
+  const nowIndex = index + titleStr.length
+  return [titleLevel, nowIndex]
+}
+const titleTab = (titleStr: string, titleLevel: number): JSX.Element => {
+  let space = ''
+  for (let i = 1; i < titleLevel; i++) {
+    space += '&nbsp;&nbsp;&nbsp;&nbsp;'
+  }
+  const htmlStr = `<div style="font-size:${16 - titleLevel}px">${space}${titleStr}</div>`
+  return <div dangerouslySetInnerHTML={{ __html: htmlStr }}></div>
+}
 const Header = (props: any) => {
   const { title, subtitle, footer } = props
   return (
@@ -57,7 +81,6 @@ const ArticleDetail: React.FC = () => {
   const getArticleDetail = () => {
     Service.get(`/api/article/${param.ArticleId}`)
       .then((res: any) => {
-        console.log(res)
         if (res) {
           const {
             id,
@@ -98,16 +121,24 @@ const ArticleDetail: React.FC = () => {
   }
   const AnchorLinkArr = []
   const { Link } = Anchor
+  let body = article.body
   let toc: string = article.toc_html.slice(23, article.toc_html.length - 14)
   let tocArr: string[] = toc.split('</a>')
   for (let href of tocArr) {
     let afterIndex = href.indexOf('">')
     let preIndex = href.indexOf('href="')
-    console.log(href.slice(afterIndex + 2))
+
+    const macTitle = href.slice(afterIndex + 2)
+
+    const macHref = href.slice(preIndex + 6, afterIndex)
+    let titleLevel = 0
+    let nowIndex = 0
+    if (body !== '') {
+      ;[titleLevel, nowIndex] = findTitleLevel(macTitle, body)
+    }
+    body = body.slice(nowIndex)
     if (preIndex !== -1 && afterIndex !== -1) {
-      AnchorLinkArr.push(
-        <Link href={href.slice(preIndex + 6, afterIndex)} title={href.slice(afterIndex + 2)} />
-      )
+      AnchorLinkArr.push(<Link href={macHref} title={titleTab(macTitle, titleLevel)} />)
     }
   }
   useEffect(() => {
@@ -187,6 +218,10 @@ const Container = styled.div`
       margin-top: 100px;
       margin-left: 40px;
     }
+  }
+  .ant-anchor-link-active {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
   }
 `
 export default ArticleDetail
