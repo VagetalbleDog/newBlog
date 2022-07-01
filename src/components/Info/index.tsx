@@ -8,11 +8,11 @@ import {
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 const codeSummaryData = [
-  { value: 25, rate: '2.7%', name: 'JSON' },
-  { value: 20, rate: '2.1%', name: 'HTML' },
-  { value: 13, rate: '1.4%', name: 'JavaScript' },
-  { value: 244, rate: '26.1%', name: 'CSS' },
-  { value: 631, rate: '67.6%', name: 'TypeScript' }
+  { value: 25, rate: '1.6%', name: 'JSON' },
+  { value: 20, rate: '1.2%', name: 'HTML' },
+  { value: 13, rate: '0.8%', name: 'JavaScript' },
+  { value: 465, rate: '29.9%', name: 'CSS' },
+  { value: 1031, rate: '66.3%', name: 'TypeScript' }
 ]
 const EChartOption = {
   tooltip: {
