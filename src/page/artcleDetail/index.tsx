@@ -1,12 +1,13 @@
-import { message, Skeleton, Space } from 'antd'
+import { Affix, BackTop, Drawer, message, Skeleton, Space } from 'antd'
 import React, { Children, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Service from '../../service'
 import { Button, PageHeader, Tabs, Anchor } from 'antd'
+import { UnorderedListOutlined } from '@ant-design/icons'
 import { Article } from '../../interface'
 import 'github-markdown-css'
-
+//找到文章标题
 const findTitleLevel = (titleStr: string, articleBody: string): [number, number] => {
   const index = articleBody.indexOf(titleStr)
   let macTitle
@@ -31,7 +32,7 @@ const titleTab = (titleStr: string, titleLevel: number): JSX.Element => {
   return <div dangerouslySetInnerHTML={{ __html: htmlStr }}></div>
 }
 const Header = (props: any) => {
-  const { title, subtitle, footer } = props
+  const { title, subtitle, footer, setShowTitle, showTitle } = props
   return (
     <PageHeader
       className="site-page-header-responsive"
@@ -42,6 +43,15 @@ const Header = (props: any) => {
         <Button key="3">修改文章</Button>,
         <Button key="1" type="primary" danger>
           删除文章
+        </Button>,
+        <Button
+          className="titleModal"
+          onClick={() => {
+            setShowTitle(!showTitle)
+          }}
+        >
+          <UnorderedListOutlined />
+          目录
         </Button>
       ]}
       footer={footer}
@@ -78,6 +88,7 @@ const ArticleDetail: React.FC = () => {
     toc_html: '',
     body_html: ''
   })
+  const [showTitle, setShowTitle] = useState<boolean>(false)
   const getArticleDetail = () => {
     Service.get(`/api/article/${param.ArticleId}`)
       .then((res: any) => {
@@ -175,6 +186,26 @@ const ArticleDetail: React.FC = () => {
               </Anchor>
             )}
           </div>
+          <Drawer
+            title="文章目录"
+            placement="right"
+            onClose={() => {
+              setShowTitle(false)
+            }}
+            visible={showTitle}
+          >
+            <Anchor
+              onClick={(e) => {
+                preventHistory(e)
+                setShowTitle(false)
+              }}
+            >
+              {AnchorLinkArr.map((link) => {
+                return link
+              })}
+            </Anchor>
+          </Drawer>
+          <BackTop duration={1000} />
         </Container>
       </TabPane>
       <TabPane tab="评论" key="2">
@@ -183,17 +214,21 @@ const ArticleDetail: React.FC = () => {
     </Tabs>
   )
   return (
-    <Header
-      title={article.title ? article.title : '加载中'}
-      subtitle={
-        article.title
-          ? `由 ${article.author.username} 创作于 ${article.created
-              .toLocaleString()
-              .slice(0, 10)} | 最后一次更新于 ${article.updated.toLocaleString().slice(0, 10)}`
-          : '加载中'
-      }
-      footer={footer}
-    />
+    <HeaderStyle>
+      <Header
+        setShowTitle={setShowTitle}
+        showTitle={showTitle}
+        title={article.title ? article.title : '加载中'}
+        subtitle={
+          article.title
+            ? `由 ${article.author.username} 创作于 ${article.created
+                .toLocaleString()
+                .slice(0, 10)} | 最后一次更新于 ${article.updated.toLocaleString().slice(0, 10)}`
+            : '加载中'
+        }
+        footer={footer}
+      />
+    </HeaderStyle>
   )
 }
 
@@ -208,20 +243,45 @@ const Container = styled.div`
   }
   .markdown-body {
     flex: 1;
+    @media screen and (min-width: 200px) {
+      font-size: 13px;
+    }
+    @media screen and (min-width: 400px) {
+      font-size: 14px;
+    }
+    @media screen and (min-width: 600px) {
+      font-size: 15px;
+    }
+    @media screen and (min-width: 800px) {
+      font-size: 17px;
+    }
   }
   .leftSide {
-    width: 10%;
+    @media screen and (min-width: 800px) {
+      width: 5%;
+    }
   }
   .rightSide {
     width: 300px;
-    .markdown-toc {
-      margin-top: 100px;
-      margin-left: 40px;
+    @media screen and (max-width: 800px) {
+      display: none;
+    }
+  }
+  .titleModal {
+    @media screen and (min-width: 800px) {
+      display: none;
     }
   }
   .ant-anchor-link-active {
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
+  }
+`
+const HeaderStyle = styled.div`
+  .ant-page-header-heading-sub-title {
+    @media screen and (max-width: 1000px) {
+      display: none;
+    }
   }
 `
 export default ArticleDetail
