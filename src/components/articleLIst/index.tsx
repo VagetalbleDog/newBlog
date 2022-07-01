@@ -35,13 +35,14 @@ const transformDesc = (description: string): string => {
   }
   return res
 }
-const ArticleList: React.FC = () => {
+const ArticleList = ({ isMobile }: any) => {
   const [artList, setArtList] = useState<Article[]>([])
 
   // 用于滚动加载的防抖
   const [loading, setLoading] = useState<boolean>(false)
   const [nextPage, setNextPage] = useState<number>(1)
   const [descriptions, setDescriptions] = useState<Description[]>([])
+  const Size = isMobile ? 'small' : 'middle'
   const loadMoreArticle = (): void => {
     if (loading) {
       return
@@ -112,7 +113,7 @@ const ArticleList: React.FC = () => {
               <List.Item className="listItem" key={item.id}>
                 <div>
                   <span className="category">
-                    <Button type="primary" shape="round">
+                    <Button type="primary" shape="round" size={Size}>
                       {item.category.title}
                     </Button>
                   </span>
@@ -133,6 +134,7 @@ const ArticleList: React.FC = () => {
                     <List.Item.Meta
                       avatar={
                         <Avatar
+                          style={isMobile ? { display: 'none' } : {}}
                           size={60}
                           src={
                             item.avatar
@@ -141,18 +143,18 @@ const ArticleList: React.FC = () => {
                           }
                         />
                       }
-                      description={findDescription(descriptions, item.id)}
+                      description={
+                        isMobile
+                          ? findDescription(descriptions, item.id).slice(0, 30) + '......'
+                          : findDescription(descriptions, item.id)
+                      }
                     />
                   </div>
                 </Link>
                 <div className="otherDetail">
                   <span className="created">
-                    发布时间：{new Date(item.created).getFullYear()}/
+                    Create at:{new Date(item.created).getFullYear()}/
                     {new Date(item.created).getMonth() + 1}/{new Date(item.created).getDate()}
-                  </span>
-                  <span className="updated">
-                    最后修改于：{new Date(item.updated).getFullYear()}/
-                    {new Date(item.updated).getMonth() + 1}/{new Date(item.updated).getDate()}
                   </span>
                   <span className="author">Created By:{item.author.username}</span>
                 </div>
@@ -206,16 +208,21 @@ const Container = styled.div`
   }
   .created {
     font-size: 10px;
-    color: violet;
-    margin: 0 10px;
-  }
-  .updated {
-    font-size: 10px;
-    color: green;
-    margin: 0 10px;
+    color: #531dab;
+    background: #f9f0ff;
+    border: 1px solid;
+    border-color: #d3adf7;
+    margin: 0 5px;
+    padding: 0 5px;
   }
   .author {
-    font-size: 14px;
+    margin: 0 5px;
+    padding: 0 5px;
+    font-size: 10px;
+    color: #d48806;
+    background: #fffbe6;
+    border: 1px solid;
+    border-color: #ffe58f;
   }
 `
 export default ArticleList

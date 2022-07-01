@@ -109,6 +109,27 @@ const Info: React.FC = () => {
   )
 }
 const Container = styled.div`
+  @media screen and (max-height: 900px) and (max-width: 800px) {
+    transform: translate(25px);
+  }
+  @media screen and (max-height: 850px) and (max-width: 800px) {
+    transform: scale(0.95) translate(25px);
+  }
+  @media screen and (max-height: 810px) and (max-width: 800px) {
+    transform: scale(0.9) translate(20px);
+  }
+  @media screen and (max-height: 770px) and (max-width: 800px) {
+    transform: scale(0.85) translate(15px);
+  }
+  @media screen and (max-height: 730px) and (max-width: 800px) {
+    transform: scale(0.8) translate(10px);
+  }
+  @media screen and (max-height: 690px) and (max-width: 800px) {
+    transform: scale(0.75) translate(-15px);
+  }
+  @media screen and (max-height: 650px) and (max-width: 800px) {
+    transform: scale(0.7);
+  }
   .container {
     width: 300px;
   }
@@ -117,7 +138,7 @@ const Container = styled.div`
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 5px;
     text-align: center;
     .avatar {
       border: 5px solid cyan;
@@ -134,38 +155,36 @@ const Container = styled.div`
     .school {
       margin-top: 10px;
       .schoolName {
-        margin: 5px 0;
+        margin: 2px 0;
         font-size: 25px;
         color: rgba(24, 144, 255, 0.8);
       }
       .year {
         font-size: 15px;
-        margin: 5px 0;
+        margin: 2px 0;
         color: rgba(24, 144, 255, 0.8);
       }
       .location {
-        margin: 5px 0;
         font-size: 12px;
         color: rgba(24, 144, 255, 0.8);
       }
       .major {
-        margin: 5px 0;
         color: rgba(24, 144, 255, 0.8);
       }
       .work {
-        margin: 5px 0;
+        margin: 2px 0;
         color: #531dab;
         font-size: 20px;
       }
       .mail {
-        margin: 5px 0;
+        margin: 2px 0;
         color: #531dab;
       }
       .sign {
         font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
         color: #1890ff;
         font-size: 22px;
-        margin: 10px;
+        margin: 5px;
       }
     }
     .codeSummary {
