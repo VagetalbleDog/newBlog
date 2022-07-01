@@ -1,5 +1,5 @@
 import { Affix, BackTop, Drawer, message, Skeleton, Space } from 'antd'
-import React, { Children, useEffect, useState } from 'react'
+import React, { Children, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Service from '../../service'
@@ -32,7 +32,7 @@ const titleTab = (titleStr: string, titleLevel: number): JSX.Element => {
   return <div dangerouslySetInnerHTML={{ __html: htmlStr }}></div>
 }
 const Header = (props: any) => {
-  const { title, subtitle, footer, setShowTitle, showTitle } = props
+  const { title, subtitle, footer, setShowTitle, showTitle, showButton } = props
   return (
     <PageHeader
       className="site-page-header-responsive"
@@ -45,7 +45,8 @@ const Header = (props: any) => {
           删除文章
         </Button>,
         <Button
-          className="titleModal"
+          className="title-drawer-button"
+          style={showButton ? {} : { display: 'none' }}
           onClick={() => {
             setShowTitle(!showTitle)
           }}
@@ -89,6 +90,9 @@ const ArticleDetail: React.FC = () => {
     body_html: ''
   })
   const [showTitle, setShowTitle] = useState<boolean>(false)
+  const [showButton, setShowButton] = useState<boolean>(true)
+  const ref = useRef<any>(null)
+
   const getArticleDetail = () => {
     Service.get(`/api/article/${param.ArticleId}`)
       .then((res: any) => {
@@ -154,7 +158,13 @@ const ArticleDetail: React.FC = () => {
   }
   useEffect(() => {
     getArticleDetail()
+    if (ref.current) {
+      if (ref.current.offsetWidth !== 0 || 0 !== ref.current.offsetHeight) {
+        setShowButton(false)
+      }
+    }
   }, [])
+
   //防止锚点留下历史记录
   const preventHistory = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -175,7 +185,7 @@ const ArticleDetail: React.FC = () => {
               dangerouslySetInnerHTML={{ __html: article.body_html }}
             ></div>
           )}
-          <div className="rightSide">
+          <div ref={ref} className="rightSide">
             {article.body === '' ? (
               <></>
             ) : (
@@ -216,6 +226,7 @@ const ArticleDetail: React.FC = () => {
   return (
     <HeaderStyle>
       <Header
+        showButton={showButton}
         setShowTitle={setShowTitle}
         showTitle={showTitle}
         title={article.title ? article.title : '加载中'}
@@ -264,11 +275,6 @@ const Container = styled.div`
   .rightSide {
     width: 300px;
     @media screen and (max-width: 800px) {
-      display: none;
-    }
-  }
-  .titleModal {
-    @media screen and (min-width: 800px) {
       display: none;
     }
   }
