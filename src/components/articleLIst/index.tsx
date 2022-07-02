@@ -13,6 +13,14 @@ interface Description {
   articleId: number
   content: string
 }
+const randomAvatar: string[] = [
+  'https://s1.328888.xyz/2022/07/03/NbrC.th.png',
+  'https://s1.328888.xyz/2022/07/03/N5bP.th.png',
+  'https://s1.328888.xyz/2022/07/03/N9g6.th.png',
+  'https://s1.328888.xyz/2022/07/03/No4I.th.png',
+  'https://s1.328888.xyz/2022/07/03/NsDK.th.png',
+  'https://s1.328888.xyz/2022/07/03/NPy7.th.png'
+]
 //返回描述
 const findDescription = (descArr: Description[], nowId: number): string => {
   let idx = descArr.findIndex((item) => {
@@ -137,11 +145,7 @@ const ArticleList = ({ isMobile }: any) => {
                         <Avatar
                           style={isMobile ? { display: 'none' } : {}}
                           size={60}
-                          src={
-                            item.avatar
-                              ? item.avatar.content
-                              : 'https://ts1.cn.mm.bing.net/th/id/R-C.61f9585ddd422a051f25d2cd63241714?rik=rTqY8OYUxS0VTA&riu=http%3a%2f%2fpic.baike.soso.com%2fp%2f20140317%2f20140317135943-549848529.jpg&ehk=YumnXO%2focBmyX5x1%2bZagEzD5hwbH6WZKRLueHDno0SA%3d&risl=&pid=ImgRaw&r=0'
-                          }
+                          src={randomAvatar[item.id % 6]}
                         />
                       }
                       description={
