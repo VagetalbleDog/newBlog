@@ -1,6 +1,6 @@
 [[redirects]]
-  from = "/api/*"
-  to = "http://www.zhuwenfu.top/api/*"
+  from = "/api/article/"
+  to = "http://www.zhuwenfu.top/api/article/"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
