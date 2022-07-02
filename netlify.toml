@@ -6,11 +6,10 @@
   [redirects.headers]
     X-From = "Netlify"
     X-Api-Key = "some-api-key-string"
-    
+
 [[headers]]
   for = "/*"
   [headers.values]
     host = 'http://www.zhuwenfu.top'
-    :authority = 'www.zhuwenfu.top'
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
