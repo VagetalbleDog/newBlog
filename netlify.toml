@@ -4,7 +4,12 @@
   status = 200
   force = true
   headers = {X-From = "Netlify"}
-
+[[redirects]]
+  from = "/api/article/:id"
+  to = "http://www.zhuwenfu.top/api/article/:id"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
 [[headers]]
   for = "/*"
   [headers.values]
