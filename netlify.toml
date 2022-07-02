@@ -1,1 +1,9 @@
-/api/*  http://www.zhuwenfu.top  200
+[[redirects]]
+  from = "/api/*"
+  to = "http://www.zhuwenfu.top"
+  status = 200
+  force = true
+  conditions = {Role = ["admin", "cms"]}
+  [redirects.headers]
+    X-From = "Netlify"
+    X-Api-Key = "some-api-key-string"
