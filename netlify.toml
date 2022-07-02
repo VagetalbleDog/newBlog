@@ -1,13 +1,2 @@
 [[redirects]]
-  from = "/api*"
-  to = "http://www.zhuwenfu.top"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    host = 'http://www.zhuwenfu.top'
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
+  /api/*  http://www.zhuwenfu.top  200
