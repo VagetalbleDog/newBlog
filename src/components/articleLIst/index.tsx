@@ -80,7 +80,8 @@ const ArticleList = ({ isMobile }: any) => {
         }
         setLoading(false)
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         message.error('加载失败,稍后再试！')
         setLoading(false)
       })
