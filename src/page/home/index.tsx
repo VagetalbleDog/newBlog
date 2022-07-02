@@ -4,7 +4,6 @@ import ArticleList from '../../components/articleLIst'
 import Footer from '../../components/footer'
 import Header from '../../components/Header'
 import Info from '../../components/Info'
-import { ConfigProvider } from 'antd'
 // ConfigProvider.config({
 //   theme: {
 //     primaryColor: '#25b864'

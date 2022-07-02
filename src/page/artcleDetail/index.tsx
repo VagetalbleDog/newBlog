@@ -1,6 +1,7 @@
-import { Affix, BackTop, Drawer, message, Skeleton, Space } from 'antd'
-import React, { Children, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { BackTop, Drawer, message, Skeleton } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Service from '../../service'
 import { Button, PageHeader, Tabs, Anchor } from 'antd'

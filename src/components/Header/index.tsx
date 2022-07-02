@@ -1,6 +1,4 @@
-import styled from '@emotion/styled'
 import {
-  AppstoreOutlined,
   ReadOutlined,
   UnorderedListOutlined,
   MailOutlined,

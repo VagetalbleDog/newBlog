@@ -1,11 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import {
-  EnvironmentOutlined,
-  ReadOutlined,
-  CheckCircleOutlined,
-  MailOutlined
-} from '@ant-design/icons'
+import { EnvironmentOutlined, ReadOutlined, MailOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 const codeSummaryData = [
   { value: 25, rate: '1.6%', name: 'JSON' },

@@ -1,8 +1,5 @@
-import { Affix, Button } from 'antd'
-import React, { useState } from 'react'
-
+import React from 'react'
 const FooterTip: React.FC = () => {
-  const [bottom, setBottom] = useState(10)
   return (
     <>
       <br />
