@@ -253,6 +253,10 @@ const Container = styled.div`
   hr::before {
     display: none;
   }
+  img {
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.3);
+  }
   .markdown-body {
     flex: 1;
     @media screen and (min-width: 200px) {
