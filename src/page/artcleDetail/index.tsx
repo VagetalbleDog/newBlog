@@ -258,6 +258,7 @@ const Container = styled.div`
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.3);
   }
   .markdown-body {
+    width: 95%;
     flex: 1;
     @media screen and (min-width: 200px) {
       font-size: 13px;
