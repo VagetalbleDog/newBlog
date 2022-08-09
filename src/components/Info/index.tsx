@@ -66,11 +66,7 @@ const Info: React.FC = () => {
     <Container>
       <div className="authorInfo">
         <div className="avatarBorder">
-          <img
-            className="avatar"
-            src="https://i-s2.328888.xyz/2022/06/30/62bdbe3b3e520.png"
-            alt=""
-          />
+          <img className="avatar" src="https://s1.328888.xyz/2022/08/09/07hko.png" alt="" />
         </div>
         <div className="authorName">Zhu Wenfu</div>
         <div className="school">
