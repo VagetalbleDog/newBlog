@@ -103,5 +103,5 @@ export const useCommonForm = <FormDataType = any, DataType = any, ReturnType = a
   const clear = () => {
     fromRef.current?.resetFields()
   }
-  return { fromRef, canEdit, loading, create, save, edit, clear }
+  return { fromRef, canEditStatue, loading, create, save, edit, clear }
 }
