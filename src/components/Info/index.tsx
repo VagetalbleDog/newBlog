@@ -66,11 +66,7 @@ const Info: React.FC = () => {
     <Container>
       <div className="authorInfo">
         <div className="avatarBorder">
-          <img
-            className="avatar"
-            src="https://i-s2.328888.xyz/2022/06/30/62bdbe3b3e520.png"
-            alt=""
-          />
+          <img className="avatar" src="https://s1.328888.xyz/2022/08/09/07hko.png" alt="" />
         </div>
         <div className="authorName">Zhu Wenfu</div>
         <div className="school">
@@ -138,17 +134,29 @@ const Container = styled.div`
     .avatar {
       border: 5px solid cyan;
       width: 195px;
+      @media screen and (max-height: 840px) and (min-width: 800px) {
+        width: 135px;
+        border: 4px solid cyan;
+      }
+      @media screen and (max-height: 740px) and (min-width: 800px) {
+        width: 120px;
+        border: 3px solid cyan;
+      }
+      @media screen and (max-height: 720px) and (min-width: 800px) {
+        width: 100px;
+        border: 3px solid cyan;
+      }
       border-radius: 50%;
     }
     .authorName {
-      margin-top: 10px;
+      margin-top: 5px;
       text-align: 28px;
       font-size: 30px;
       color: #1890ff;
       font-weight: 800;
     }
     .school {
-      margin-top: 10px;
+      margin-top: 3px;
       .schoolName {
         margin: 2px 0;
         font-size: 25px;
@@ -184,10 +192,12 @@ const Container = styled.div`
     }
     .codeSummary {
       margin-top: 10px;
+      @media screen and (max-height: 840px) {
+        margin-top: 5px;
+      }
       .desc {
         font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
         font-size: 14px;
-        margin-top: 20px;
       }
     }
   }
