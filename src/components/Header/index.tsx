@@ -1,12 +1,4 @@
-import {
-  ReadOutlined,
-  UnorderedListOutlined,
-  MailOutlined,
-  EditOutlined,
-  UserOutlined,
-  CheckCircleOutlined,
-  SmileOutlined
-} from '@ant-design/icons'
+import { ReadOutlined, SmileOutlined } from '@ant-design/icons'
 import { Affix, Drawer, MenuProps } from 'antd'
 import React, { useState } from 'react'
 import { Menu } from 'antd'
