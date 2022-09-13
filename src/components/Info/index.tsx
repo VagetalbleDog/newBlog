@@ -80,10 +80,6 @@ const Info: React.FC = () => {
             辽宁~沈阳
           </div>
           <div className="major">Major in Information System</div>
-          <div className="work">
-            <EnvironmentOutlined />
-            网易/云音乐/前端开发
-          </div>
           <div className="mail">
             <MailOutlined />
             2583243657@qq.com
